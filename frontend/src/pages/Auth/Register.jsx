@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../component/Loader";
 import { setCredentials } from "../../redux/features/auth/authSlice";
-import { toast } from "react-toastify";
 import { useRegisterMutation } from "../../redux/api/users";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -16,6 +16,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [register, { isLoading }] = useRegisterMutation();
+
   const { userInfo } = useSelector((state) => state.auth);
 
   const { search } = useLocation();
@@ -32,17 +33,19 @@ const Register = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Password Does not match");
+      toast.error("Password do not match");
     } else {
       try {
         const res = await register({ username, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
         navigate(redirect);
-        toast.success("User Successfully Registerd");
+        toast.success("User successfully registered.");
       } catch (err) {
-        console.log(err);
-        toast.error(err.data.message);
+        console.log('Error details:', err);
+        const errorMessage = err?.data?.message || "An unexpected error occurred.";
+        toast.error(errorMessage);
       }
+      
     }
   };
 
@@ -119,10 +122,12 @@ const Register = () => {
 
           <button
             disabled={isLoading}
+            type="submit"
             className="bg-teal-500 text-white px-4 py-2 rounded cursor-pointer my-[1rem]"
           >
             {isLoading ? "Registering..." : "Register"}
           </button>
+
           {isLoading && <Loader />}
         </form>
 
@@ -141,10 +146,9 @@ const Register = () => {
       <img
         src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         alt=""
-        className="h-[43rem] w-[45%] xl:block md:hidden sm:hidden rounded-lg"
+        className="h-[45rem] w-[45%] xl:block md:hidden sm:hidden rounded-lg"
       />
     </div>
   );
 };
-
 export default Register;

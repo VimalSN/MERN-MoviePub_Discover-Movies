@@ -99,22 +99,24 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
 
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = bcrypt.hash(password, salt);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
       user.password = hashedPassword;
     }
 
     const updatedUser = await user.save();
 
     res.json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      isAdmin: user.isAdmin,
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+      isAdmin: updatedUser.isAdmin,
     });
   } else {
-    res.status(404).json({ message: "User not Found " });
+    res.status(404);
+    throw new Error("User not found");
   }
 });
+
 export {
   createUser,
   getAllUsers,
