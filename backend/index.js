@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 //files
 import connectDB from "./config/db.js";
 import userRoutes from "../backend/routes/userRoutes.js";
+import genreRoutes from "../backend/routes/genreRoutes.js";
 
 //configuration
 dotenv.config();
@@ -22,5 +23,6 @@ const PORT = process.env.PORT || 3000;
 
 //Routes
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/genre", genreRoutes);
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
