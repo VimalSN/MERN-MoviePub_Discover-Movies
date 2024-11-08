@@ -72,7 +72,7 @@ const movieReview = async (req, res) => {
         user: req.user._id,
       };
 
-      movie.revie + ws.push(review);
+      movie.reviews.push(review);
       movie.numReviews = movie.reviews.length;
       movie.rating =
         movie.reviews.reduce((acc, item) => item.rating + acc, 0) /
