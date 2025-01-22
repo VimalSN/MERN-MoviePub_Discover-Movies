@@ -73,8 +73,19 @@ JWT_SECRET=your_jwt_secret
 <p>Here are some screenshots of the project:</p>
 <ul>
   <li><strong>Homepage</strong>:</li>
-  <img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/uploads/image-1737373454337.jpg" alt="Homepage Screenshot" />
+  
+  <img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Images/Homepage.png" alt="Homepage Screenshot" />
+  
   <li><strong>Admin Dashboard</strong>:</li>
-  <img src="https://via.placeholder.com/800x400?text=Admin+Dashboard+Screenshot" alt="Admin Dashboard Screenshot" />
+  
+  <img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Images/Admin%20Dashboard.png" alt="Admin Dashboard Screenshot" />
+  
+  <li><strong>Search Page</strong>:</li>
+  
+  <img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Images/Search%20Page.png" alt="Search Page Screenshot" />
+  
+  <li><strong>Update Movie Details</strong>:</li>
+  
+  <img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Images/Update%20Movie%20Details.png" alt="Update Movie Details Screenshot" />
 </ul>
 
