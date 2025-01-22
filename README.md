@@ -1,7 +1,7 @@
 🎬 Movie Pub - A Movie-Seeking Platform
 
 Movie Pub is a robust web application designed for movie enthusiasts to explore, manage, and categorize movies efficiently. It incorporates a secure role-based access control (RBAC) system and an intuitive admin dashboard for seamless management.
-
+____________________________________________________________________________________________________________________________________________________________________________________________________________________
 ✨ Features
 🔒 Secure User Authentication & Authorization:
 Implemented JWT (JSON Web Tokens) for a highly secure login and registration system to protect user data and ensure authorized access.
