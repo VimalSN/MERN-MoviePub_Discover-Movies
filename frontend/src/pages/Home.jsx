@@ -2,7 +2,7 @@ import React from "react"
 import Header from "./Movies/Header"
 import MoviesContainerPage from "./Movies/MoviesContainerPage"
 import { FaFilm } from "react-icons/fa"
-
+//fs
 const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b mt-5 from-gray-900 to-gray-800 text-white">
