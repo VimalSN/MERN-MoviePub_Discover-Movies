@@ -71,4 +71,10 @@ JWT_SECRET=your_jwt_secret
 
 <h2>📷 Preview</h2>
 <p>Here are some screenshots of the project:</p>
+<ul>
+  <li><strong>Homepage</strong>:</li>
+  <img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/uploads/image-1737373454337.jpg" alt="Homepage Screenshot" />
+  <li><strong>Admin Dashboard</strong>:</li>
+  <img src="https://via.placeholder.com/800x400?text=Admin+Dashboard+Screenshot" alt="Admin Dashboard Screenshot" />
+</ul>
 
