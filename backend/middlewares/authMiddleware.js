@@ -23,7 +23,7 @@ const authenticate = asyncHandler(async (req, res, next) => {
     throw new Error("Not Authorized, No Token");
   }
 });
-
+  
 //Check if the user is admin or not
 const authorizeAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {

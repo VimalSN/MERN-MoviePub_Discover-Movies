@@ -108,7 +108,7 @@ const UpdateMovie = () => {
   };
 
   return (
-    <div className="container flex justify-center items-center mt-4">
+    <div className="container flex justify-center items-center mt-[10rem] ml-[6rem]">
       <form>
         <p className="text-green-200 w-[50rem] text-2xl mb-4">Update Movie</p>
 

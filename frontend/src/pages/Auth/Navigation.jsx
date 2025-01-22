@@ -1,28 +1,36 @@
-import { useState } from "react";
-import {
-  AiOutlineHome,
-  AiOutlineLogin,
-  AiOutlineUserAdd,
-} from "react-icons/ai";
-import { MdOutlineLocalMovies } from "react-icons/md";
+import { useState, useEffect } from "react";
+import { AiOutlineLogin, AiOutlineUserAdd } from "react-icons/ai";
+import { MdOutlineManageSearch } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../redux/api/users";
 import { logout } from "../../redux/features/auth/authSlice";
+import MoviePub from "../../assets/MoviePub2.png";
 
 const Navigation = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const [dropDownOpen, setDropDownOpen] = useState(false);
-
-  const toggleDropDown = () => {
-    setDropDownOpen(!dropDownOpen);
-  };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [logoutApiCall] = useLogoutMutation();
+
+  // Handle click outside dropdown to close it
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest(".dropdown-button")) {
+        setDropDownOpen(false);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  const toggleDropDown = () => {
+    setDropDownOpen((prev) => !prev);
+  };
 
   const logoutHandler = async () => {
     try {
@@ -30,51 +38,42 @@ const Navigation = () => {
       dispatch(logout());
       navigate("/login");
     } catch (error) {
-      console.error(error);
+      console.error("Logout failed:", error);
     }
   };
 
   return (
-    <div className="fixed bottom-10 left-[30rem] transform translate-x-1/2 translate-y-1/2 z-50 bg-[#0f0f0f] border w-[30%] px-[4rem] mb-[2rem] rounded">
-      <section className="flex justify-between items-center">
-        {/* Section 1 */}
-        <div className="flex justify-center items-center mb-[2rem]">
-          <Link
-            to="/"
-            className="flex items-center transition-transform transform hover:translate-x-2"
-          >
-            <AiOutlineHome className="mr-2 mt-[3rem] text-gray-100" size={26} />
-            <span className="hidden nav-item-name mt-[3rem]">Home</span>
+    <div className="fixed top-0 left-0 z-50 bg-[#000] w-full px-8 rounded-b-lg">
+      <section className="flex justify-between items-center py-3">
+        {/* Logo and Navigation Links */}
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center">
+            <img
+              src={MoviePub}
+              alt="MoviePub Logo"
+              className="w-[170px] h-[50px]"
+            />
           </Link>
           <Link
             to="/movies"
-            className="flex items-center transition-transform transform hover:translate-x-2 ml-[1rem]"
+            className="flex items-center ml-4 transition-transform transform hover:translate-x-2"
           >
-            <MdOutlineLocalMovies
-              className="mr-2 mt-[3rem]  text-gray-100"
-              size={26}
-            />
-            <span className="hidden nav-item-name mt-[3rem]">SHOP</span>
+            <MdOutlineManageSearch className="text-gray-100 mr-2" size={26} />
           </Link>
         </div>
-        {/* Section 2 */}
-        <div className="relative">
-          <button
-            onClick={toggleDropDown}
-            className="text-gray-800 focus:outline-none"
-          >
-            {userInfo ? (
-              <span className="text-white">{userInfo.username}</span>
-            ) : (
-              <></>
-            )}
 
-            {userInfo && (
+        {/* User Info and Dropdown */}
+        <div className="relative">
+          {userInfo ? (
+            <button
+              onClick={toggleDropDown}
+              className="flex items-center dropdown-button focus:outline-none"
+            >
+              <span className="text-white">{userInfo.username}</span>
               <svg
-                xmlns="http://www.w3
-                 .org/2000/svg"
-                className={`h-4 w-4 ml-1 ${
-                  dropDownOpen ? "transform rotate-180" : ""
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-4 w-4 ml-2 transform transition-transform duration-300 ease-in-out ${
+                  dropDownOpen ? "rotate-180" : ""
                 }`}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -84,28 +83,46 @@ const Navigation = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
-                  d={dropDownOpen ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"}
+                  d="M19 9l-7 7-7-7"
                 />
               </svg>
-            )}
-          </button>
+            </button>
+          ) : (
+            <ul className="flex space-x">
+              {" "}
+              {/* Added consistent spacing */}
+              <li>
+                <Link
+                  to="/login"
+                  className="flex items-center mt-1 px-4 py-2 rounded-lg  text-gray-100 hover:bg-gray-700 hover:text-white transition-colors duration-300"
+                >
+                  <span className="nav-item-name">SignIn</span>
+                </Link>
+              </li>
+              <span className="mt-3">/</span>
+              <li>
+                <Link
+                  to="/register"
+                  className="flex items-center mt-1 px-4 py-2 rounded-lg  text-gray-100 hover:bg-gray-700 hover:text-white transition-colors duration-300"
+                >
+                  <span className="nav-item-name">SignUp</span>
+                </Link>
+              </li>
+            </ul>
+          )}
+
+          {/* Dropdown Menu */}
           {dropDownOpen && userInfo && (
-            <ul
-              className={`absolute right-0 mt-2 mr-14 w-[10rem] space-y-2 bg-white text-gray-600 ${
-                !userInfo.isAdmin ? "-top-20" : "-top-24"
-              }`}
-            >
+            <ul className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md text-gray-600">
               {userInfo.isAdmin && (
-                <>
-                  <li>
-                    <Link
-                      to="admin/movies/dashboard"
-                      className="block px-4 py-2 hover:bg-gray-100"
-                    >
-                      Dashboard
-                    </Link>
-                  </li>
-                </>
+                <li>
+                  <Link
+                    to="/admin/movies/dashboard"
+                    className="block px-4 py-2 hover:bg-gray-100 rounded-md"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
               )}
               <li>
                 <Link
@@ -118,35 +135,10 @@ const Navigation = () => {
               <li>
                 <button
                   onClick={logoutHandler}
-                  className="block w-full px-4 py-2 text-left hover:bg-gray-100"
+                  className="block w-full px-4 py-2 text-left hover:bg-gray-100 rounded-md"
                 >
                   Logout
                 </button>
-              </li>
-            </ul>
-          )}
-          {!userInfo && (
-            <ul className="flex">
-              <li>
-                <Link
-                  to="/login"
-                  className="flex items-center mt-5 transition-transform transform hover:translate-x-2 mb-[2rem]"
-                >
-                  <AiOutlineLogin
-                    className="mr-2 mt-[4px] text-gray-100"
-                    size={26}
-                  />
-                  <span className="hidden nav-item-name">LOGIN</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/register"
-                  className="flex items-center mt-5 transition-transform transform hover:translate-x-2 ml-[1rem]"
-                >
-                  <AiOutlineUserAdd className=" text-gray-100" size={26} />
-                  <span className="hidden nav-item-name">REGISTER</span>
-                </Link>
               </li>
             </ul>
           )}

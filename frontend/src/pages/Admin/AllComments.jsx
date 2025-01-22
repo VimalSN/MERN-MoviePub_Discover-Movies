@@ -20,7 +20,7 @@ const AllComments = () => {
   };
 
   return (
-    <div>
+    <div className="mt-10">
       {movie?.map((m) => (
         <section
           key={m._id}

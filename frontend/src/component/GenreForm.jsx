@@ -17,14 +17,14 @@ const GenreForm = ({
         />
 
         <div className="flex justify-between">
-          <button className="bg-teal-500 text-white py-2 px-4 rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+          <button className="bg-teal-500 text-white py-2 px-8 ml-[27rem] mt-4  rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
             {buttonText}
           </button>
 
           {handleDelete && (
             <button
               onClick={handleDelete}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+              className="bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             >
               Delete
             </button>

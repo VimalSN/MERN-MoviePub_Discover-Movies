@@ -94,9 +94,9 @@ const GenreList = () => {
   };
 
   return (
-    <div className="ml-[10rem] flex flex-col md:flex-row">
+    <div className="ml-[22rem] mt-[10rem] flex flex-col md:flex-row">
       <div className="md:w-3/4 p-3">
-        <h1 className="h-12">Manage Genres</h1>
+        <h1 className="h-12 font-bold text-2xl ml-[25rem]">Manage Genres</h1>
         <GenreForm
           value={name}
           setValue={setName}
@@ -105,7 +105,7 @@ const GenreList = () => {
 
         <br />
 
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-center">
           {genres?.map((genre) => (
             <div key={genre._id}>
               <button
