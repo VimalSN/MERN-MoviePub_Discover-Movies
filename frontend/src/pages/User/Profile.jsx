@@ -25,7 +25,7 @@ const Profile = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // Password validation
+    // check if there is change and Password validation  
     if (password && password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;

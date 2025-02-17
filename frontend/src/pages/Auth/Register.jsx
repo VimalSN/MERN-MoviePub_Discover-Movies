@@ -17,10 +17,11 @@ const Register = () => {
 
   const [register, { isLoading }] = useRegisterMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth); // it used to extract the user data based on the 'auth'slice property and userinfo 
+  // contains the user name,id,email,token 
 
-  const { search } = useLocation();
-  const sp = new URLSearchParams(search);
+  const { search } = useLocation(); // https://example.com/page?name=John&age=30&theme=dark => ?name=John&age=30&theme=dark
+  const sp = new URLSearchParams(search);  // name: john, age: 30, theme: darkm, so URLSearchParams is used to extract info from the paramaters
   const redirect = sp.get("redirect") || "/";
 
   useEffect(() => {
@@ -28,10 +29,14 @@ const Register = () => {
       navigate(redirect);
     }
   }, [navigate, redirect, userInfo]);
+  
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault(); //used to prevent the default behavior of the form submission. By default, when a form is submitted, the page reloads,
+    //  or the browser navigates to the action URL of the form. This method is essential in single-page applications (SPAs) where
+    //  you want to handle form submissions without reloading the page.
+    
+  
     if (password !== confirmPassword) {
       toast.error("Password do not match");
     } else {
@@ -152,3 +157,35 @@ const Register = () => {
   );
 };
 export default Register;
+
+
+
+
+// In your code, the useEffect hook watches for changes in userInfo. Here's how it works:
+
+// Initial Render: When the Register component first renders, the value of userInfo will be initially undefined or null (since no user is logged in at that point). Therefore, the code inside useEffect won’t run until userInfo gets updated.
+
+// When userInfo Changes:
+
+// The useEffect hook is triggered whenever there’s a change in userInfo.
+// If userInfo is populated (i.e., a user has successfully registered and their info is stored in the Redux state), the navigate(redirect) will execute, and the user will be redirected to the desired page (the redirect URL or / if no redirect is provided).
+// When Will userInfo be Updated?:
+
+// After a successful registration, inside your submitHandler, you call dispatch(setCredentials({ ...res })), which updates the Redux state (including userInfo).
+// Once this happens, useEffect will identify the change in userInfo and trigger the navigation logic.
+// Flow:
+// On the first render, userInfo is not set (assuming no one is logged in).
+// The user fills out the registration form and clicks submit.
+// After the registration API call is successful, userInfo is updated via dispatch(setCredentials({ ...res })).
+// The useEffect hook detects that userInfo has changed and executes navigate(redirect), redirecting the user to the appropriate page.
+// Important Notes:
+// The useEffect hook will run once during the initial render and then again whenever userInfo changes, due to the dependency array [navigate, redirect, userInfo].
+
+
+// Why useEffect Runs on Initial Render:
+// Component Mount: On the initial render, the useEffect will run regardless of the dependency array. The purpose of this is to handle side 
+// effects (like fetching data, subscribing to services, etc.) right after the component has been rendered.
+
+// Dependencies: The dependency array you provided ([navigate, redirect, userInfo]) ensures that the useEffect will only rerun when one 
+// of these values changes. However, the first time the component is rendered, React will run the useEffect for the first time, treating 
+// it as an initial invocation of the side effect.

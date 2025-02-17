@@ -51,8 +51,8 @@ const MoviesContainerPage = () => {
                 {g.name}
               </button>
             ))}
-          </nav>{" "}
-          <section className="mt-[4rem] flex flex-wrap justify-center">
+          </nav>
+          <section className="mt-[1rem] flex flex-wrap justify-center">
             {filteredMovies?.map((movie) => (
               <MovieCard key={movie._id} movie={movie} />
             ))}

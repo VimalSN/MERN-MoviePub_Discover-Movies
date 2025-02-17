@@ -21,6 +21,7 @@ const CreateMovie = () => {
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null); // Stores the preview URL
 
   const [
     createMovie,
@@ -40,7 +41,6 @@ const CreateMovie = () => {
         ...prevData,
         genre: genres[0]?._id || "",
       }));
-      console.log(genres[0]?._id);
     }
   }, [genres]);
 
@@ -48,7 +48,7 @@ const CreateMovie = () => {
     const { name, value } = e.target;
 
     if (name === "genre") {
-      const selectedGenre = genres.find((genre) => genre.name === value);
+      const selectedGenre = genres.find((genre) => genre._id === value);
 
       setMovieData((prevData) => ({
         ...prevData,
@@ -64,7 +64,10 @@ const CreateMovie = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setSelectedImage(file);
+    if (file) {
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file)); // Creates a preview of the image
+    }
   };
 
   const handleCreateMovie = async () => {
@@ -73,7 +76,7 @@ const CreateMovie = () => {
         !movieData.name ||
         !movieData.year ||
         !movieData.detail ||
-        !movieData.cast ||
+        !movieData.cast.length ||
         !selectedImage
       ) {
         toast.error("Please fill all required fields");
@@ -86,7 +89,7 @@ const CreateMovie = () => {
         const formData = new FormData();
         formData.append("image", selectedImage);
 
-        const uploadImageResponse = await uploadImage(formData);
+        const uploadImageResponse = await uploadImage(formData).unwrap();
 
         if (uploadImageResponse.data) {
           uploadedImagePath = uploadImageResponse.data.image;
@@ -99,7 +102,7 @@ const CreateMovie = () => {
         await createMovie({
           ...movieData,
           image: uploadedImagePath,
-        });
+        }).unwrap();
 
         navigate("/admin/movies-list");
 
@@ -108,10 +111,13 @@ const CreateMovie = () => {
           year: 0,
           detail: "",
           cast: [],
-          ratings: 0,
+          rating: 0,
           image: null,
           genre: "",
         });
+
+        setSelectedImage(null);
+        setImagePreview(null); // Clear preview after submission
 
         toast.success("Movie Added To Database");
       }
@@ -166,7 +172,7 @@ const CreateMovie = () => {
             <input
               type="text"
               name="cast"
-              value={movieData.cast.join(", ")}
+              value={Array.isArray(movieData.cast) ? movieData.cast.join(", ") : ""}
               onChange={(e) =>
                 setMovieData({ ...movieData, cast: e.target.value.split(", ") })
               }
@@ -187,7 +193,7 @@ const CreateMovie = () => {
                 <option>Loading genres...</option>
               ) : (
                 genres.map((genre) => (
-                  <option key={genre.id} value={genre.id}>
+                  <option key={genre._id} value={genre._id}>
                     {genre.name}
                   </option>
                 ))
@@ -196,30 +202,18 @@ const CreateMovie = () => {
           </label>
         </div>
 
+        {/* Image Upload with Preview */}
         <div className="mb-4">
-          <label
-            style={
-              !selectedImage
-                ? {
-                    border: "1px solid #888",
-                    borderRadius: "5px",
-                    padding: "8px",
-                  }
-                : {
-                    border: "0",
-                    borderRadius: "0",
-                    padding: "0",
-                  }
-            }
-          >
-            {!selectedImage && "Upload Image"}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              style={{ display: !selectedImage ? "none" : "block" }}
-            />
+          <label className="block">
+            Upload Image:
+            <input type="file" accept="image/*" onChange={handleImageChange} className="mt-2" />
           </label>
+          {imagePreview && (
+            <div className="mt-2">
+              <p className="text-gray-400">Image Preview:</p>
+              <img src={imagePreview} alt="Preview" className="mt-2 w-32 h-32 object-cover rounded-lg border" />
+            </div>
+          )}
         </div>
 
         <button

@@ -1,4 +1,4 @@
-import path from "path";
+import path from "path"; 
 import express from "express";
 import multer from "multer";
 
@@ -6,11 +6,11 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // This should point to the correct folder
+    cb(null, "uploads/"); // This should point to the correct folder where it should be saved 
   },
   filename: (req, file, cb) => {
     const extname = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${Date.now()}${extname}`);
+    cb(null, `${file.fieldname}-${Date.now()}${extname}`);  // this is how filename will be stored 
   },
 });
 
@@ -28,7 +28,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({ storage, fileFilter }); //Uses our storage settings & file filter.
 const uploadSingleImage = upload.single("image");
 
 router.post("/", (req, res) => {
@@ -47,3 +47,27 @@ router.post("/", (req, res) => {
 });
 
 export default router;
+
+
+
+
+
+
+
+// ✔ When a user uploads an image, this route gets triggered.
+// ✔ It calls uploadSingleImage(req, res, callback):
+
+// If there's an error (wrong file type, no file selected) → Returns 400 (Bad Request).
+// If the file is uploaded successfully → Sends back image path & success message.
+// If no file is provided → Returns an error.
+
+// {
+//   "message": "Image uploaded successfully",
+//   "image": "/uploads/image-1707162035000.jpg"
+// }
+
+
+// 1. multer.diskStorage → Defines how & where files are stored.
+// 2. fileFilter → Ensures only images are uploaded.
+// 3. upload.single("image") → Allows only one file upload at a time.
+// 4. POST /upload → Handles the file upload and returns the image path.
