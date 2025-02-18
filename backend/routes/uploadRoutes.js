@@ -34,13 +34,18 @@ const uploadSingleImage = upload.single("image");
 router.post("/", (req, res) => {
   uploadSingleImage(req, res, (err) => {
     if (err) {
-      res.status(400).send({ message: err.message });
+      console.error("Error during upload:", err); // Log the error
+      res.status(400).send({ message: err.message || "Failed to upload image" });
     } else if (req.file) {
+      // Correct the file path to use forward slashes
+      console.log("File uploaded:", req.file); 
+      const filePath = req.file.path.replace("\\", "/"); // Replace backslashes with forward slashes
       res.status(200).send({
         message: "Image uploaded successfully",
-        image: `/${req.file.path}`,
+        image: `/${filePath}`, // Send the correct path in the response
       });
     } else {
+      console.error("No file received in the request.");
       res.status(400).send({ message: "No image file provided" });
     }
   });

@@ -15,20 +15,32 @@ const MoviesContainerPage = () => {
   const { data: genres } = useFetchGenresQuery();
   const { data: randomMovies } = useGetRandomMoviesQuery();
 
+  // Remove duplicate movies based on movie _id
+  const allMovies = [
+    ...(data || []),
+    ...(topMovies || []),
+    ...(randomMovies || []),
+  ];
+
+  // Create a Set to remove duplicates based on movie _id
+  const uniqueMovies = [
+    ...new Map(allMovies.map((movie) => [movie._id, movie])).values(),
+  ];
+
   const [selectedGenre, setSelectedGenre] = useState(null);
 
   const handleGenreClick = (genreId) => {
     setSelectedGenre(genreId);
   };
 
-  const filteredMovies = data?.filter(
+  const filteredMovies = uniqueMovies.filter(
     (movie) => selectedGenre === null || movie.genre === selectedGenre
   );
 
   return (
     <div>
       <section className="flex flex-col justify-center items-center w-full lg:w-auto">
-        <div className="w-full lg:w-[85rem] mb-8 ">
+        {/* <div className="w-full lg:w-[85rem] mb-8 ">
           <h1 className="mb-5">Chosen For You</h1>
           <SliderUtil data={randomMovies} />
         </div>
@@ -36,7 +48,7 @@ const MoviesContainerPage = () => {
         <div className="w-full lg:w-[85rem] mb-8">
           <h1 className="mb-5">Top Movies</h1>
           <SliderUtil data={topMovies} />
-        </div>
+        </div> */}
 
         <div className="w-full lg:w-[85rem] mb-8">
           <nav className="flex justify-center">
@@ -60,7 +72,7 @@ const MoviesContainerPage = () => {
         </div>
       </section>
     </div>
-  );  
+  );
 };
 
 export default MoviesContainerPage;

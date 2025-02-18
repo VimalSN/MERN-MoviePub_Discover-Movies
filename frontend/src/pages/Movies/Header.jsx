@@ -1,18 +1,30 @@
-import SliderUtil from "../../component/SliderUtil";
 import { useGetNewMoviesQuery } from "../../redux/api/movies";
-import { Link } from "react-router-dom";
+import MovieCard from "./MovieCard";
 
 const Header = () => {
-  const { data } = useGetNewMoviesQuery();
+  const { data = [], isLoading, error } = useGetNewMoviesQuery();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading movies</div>;
+  }
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <div className="w-full lg:w-[85rem] md:w-[80%] mr-0 md:mr-2">
-        <SliderUtil data={data} />
+      <div className="w-full lg:w-[85rem] md:w-[80%] mr-0 md:mr-2 overflow-x-auto">
+        <div className="flex">
+          {data.map((movie) => (
+            <div key={movie._id} className="flex-shrink-0 m-2">
+              <MovieCard movie={movie} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Header;
-// flex flex-col  

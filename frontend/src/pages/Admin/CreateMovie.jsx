@@ -48,7 +48,7 @@ const CreateMovie = () => {
     const { name, value } = e.target;
 
     if (name === "genre") {
-      const selectedGenre = genres.find((genre) => genre._id === value);
+      const selectedGenre = genres.find((genre) => String(genre._id) === value);
 
       setMovieData((prevData) => ({
         ...prevData,
@@ -61,9 +61,9 @@ const CreateMovie = () => {
       }));
     }
   };
-
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log(file)
     if (file) {
       setSelectedImage(file);
       setImagePreview(URL.createObjectURL(file)); // Creates a preview of the image
@@ -82,45 +82,49 @@ const CreateMovie = () => {
         toast.error("Please fill all required fields");
         return;
       }
-
+  
       let uploadedImagePath = null;
-
+  
       if (selectedImage) {
         const formData = new FormData();
-        formData.append("image", selectedImage);
-
-        const uploadImageResponse = await uploadImage(formData).unwrap();
-
-        if (uploadImageResponse.data) {
-          uploadedImagePath = uploadImageResponse.data.image;
+        formData.append("image", selectedImage);  // Make sure to append the image correctly
+  
+        const uploadImageResponse = await uploadImage(formData).unwrap(); 
+        console.log(uploadImageResponse) // Upload the image using FormData
+        
+  
+        if (uploadImageResponse && uploadImageResponse.image) {
+          uploadedImagePath = uploadImageResponse.image;
+          console.log(uploadedImagePath) // Use the path returned by the server
         } else {
           console.error("Failed to upload image: ", uploadImageErrorDetails);
           toast.error("Failed to upload image");
           return;
         }
-
-        await createMovie({
-          ...movieData,
-          image: uploadedImagePath,
-        }).unwrap();
-
-        navigate("/admin/movies-list");
-
-        setMovieData({
-          name: "",
-          year: 0,
-          detail: "",
-          cast: [],
-          rating: 0,
-          image: null,
-          genre: "",
-        });
-
-        setSelectedImage(null);
-        setImagePreview(null); // Clear preview after submission
-
-        toast.success("Movie Added To Database");
       }
+  
+      // Proceed with creating the movie only if the image was uploaded successfully
+      await createMovie({
+        ...movieData,
+        image: uploadedImagePath, // Include the uploaded image path in the movie data
+      }).unwrap();
+  
+      navigate("/admin/movies-list");
+  
+      // Reset form state after successful submission
+      setMovieData({
+        name: "",
+        year: 0,
+        detail: "",
+        cast: [],
+        rating: 0,
+        image: null,
+        genre: "",
+      });
+      setSelectedImage(null);
+      setImagePreview(null); // Clear preview after submission
+  
+      toast.success("Movie Added To Database");
     } catch (error) {
       console.error("Failed to create movie: ", createMovieErrorDetail);
       toast.error(`Failed to create movie: ${createMovieErrorDetail?.message}`);
@@ -172,7 +176,9 @@ const CreateMovie = () => {
             <input
               type="text"
               name="cast"
-              value={Array.isArray(movieData.cast) ? movieData.cast.join(", ") : ""}
+              value={
+                Array.isArray(movieData.cast) ? movieData.cast.join(", ") : ""
+              }
               onChange={(e) =>
                 setMovieData({ ...movieData, cast: e.target.value.split(", ") })
               }
@@ -206,12 +212,21 @@ const CreateMovie = () => {
         <div className="mb-4">
           <label className="block">
             Upload Image:
-            <input type="file" accept="image/*" onChange={handleImageChange} className="mt-2" />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="mt-2"
+            />
           </label>
           {imagePreview && (
             <div className="mt-2">
               <p className="text-gray-400">Image Preview:</p>
-              <img src={imagePreview} alt="Preview" className="mt-2 w-32 h-32 object-cover rounded-lg border" />
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="mt-2 w-32 h-32 object-cover rounded-lg border"
+              />
             </div>
           )}
         </div>
