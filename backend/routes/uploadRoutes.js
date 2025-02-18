@@ -6,7 +6,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // This should point to the correct folder where it should be saved 
+    cb(null, "backend/uploads/"); // This should point to the correct folder where it should be saved 
   },
   filename: (req, file, cb) => {
     const extname = path.extname(file.originalname);
@@ -42,7 +42,7 @@ router.post("/", (req, res) => {
       const filePath = req.file.path.replace("\\", "/"); // Replace backslashes with forward slashes
       res.status(200).send({
         message: "Image uploaded successfully",
-        image: `/${filePath}`, // Send the correct path in the response
+        image: `/${filePath.split("backend/")[1]}`, // Send the correct path in the response
       });
     } else {
       console.error("No file received in the request.");

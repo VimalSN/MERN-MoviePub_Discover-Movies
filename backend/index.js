@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import cors from 'cors';
+import cors from "cors";
 
 //files
 import connectDB from "./config/db.js";
@@ -32,7 +32,7 @@ app.use("/api/v1/movies", moviesRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 
 const __dirname = path.resolve(); // returns the absolute path of the current working directory.  Example - C:\Users\JohnDoe\Projects\MyApp
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "backend/uploads")));
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
 
