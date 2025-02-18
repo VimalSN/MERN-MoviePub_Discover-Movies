@@ -1,4 +1,6 @@
 # 📸 MERN Project with Image Uploads
+![Home Screen]([https://github.com/username/repo-name/blob/main/assets/logo.png?raw=true](https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Home%20Page.png))
+
 
 This is a **MERN stack** project featuring image uploads and storage using Cloudinary (optional). It includes:
 - ⚛️ **Frontend:** React (Vite)
