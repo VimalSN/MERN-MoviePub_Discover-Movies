@@ -1,5 +1,5 @@
 # 📸 MERN Project with Image Uploads
-<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Home%20Page.png" alt="Home Screen" width="400" height="300">
+<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Home%20Page.png" alt="Home Screen" width="700" height="600">
 
 
 This is a **MERN stack** project featuring image uploads and storage using Cloudinary (optional). It includes:
