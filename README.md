@@ -18,7 +18,7 @@ This is a **MERN stack** project featuring image uploads and storage using Cloud
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend:** React (Vite), Axios, Redux Toolkit (optional)  
+- **Frontend:** React (Vite), Axios, Redux Toolkit 
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB Atlas  
 - **Optional Image Storage:** Cloudinary  
@@ -38,3 +38,4 @@ This is a **MERN stack** project featuring image uploads and storage using Cloud
 ```sh
 git clone <repository-url>
 cd <project-folder>
+npm i 
