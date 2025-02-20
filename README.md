@@ -43,11 +43,11 @@ cd <project-folder>
 npm i
 ```
 ## 🛠️ Screen Shots
-- 🖥️ Admin Dashboard
-<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Admin%20Dashboard.png" alt="Home Screen" width="700" height="500">
-- ☁️ Filtering Page
-<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Filtering%20Page.png" alt="Home Screen" width="700" height="500">
-- 📱 Movie Card
-<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Movie%20Card.png" alt="Home Screen" width="700" height="500">
+- 🖥️ Admin Movie List
+<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Admin%20Movie%20List.png" alt="Home Screen" width="700" height="500">
+- ☁️ Movie Details
+<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Movie%20Details.png" alt="Home Screen" width="700" height="500">
+- 📱 Updating Movie
+<img src="https://github.com/VimalSN/MERN-MoviePub_Discover-Movies/blob/main/Projects%20Screenshots/Updating%20Movie.png" alt="Home Screen" width="700" height="500">
 
 
