@@ -16,3 +16,17 @@ body {
     color: black;
   }
   
+  /* Add these custom styles for the carousel */
+.slick-dots li button:before {
+  color: #fbbf24 !important; /* Yellow dot color */
+}
+
+.slick-dots li.slick-active button:before {
+  color: #f59e0b !important; /* Active dot color */
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 10;
+}
+

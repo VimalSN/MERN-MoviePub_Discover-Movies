@@ -8,6 +8,7 @@ import {
 import MovieCard from "./MovieCard";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { FaSearch } from "react-icons/fa";
 import banner from "../../assets/banner.jpg";
 import {
   setMoviesFilter,
@@ -79,32 +80,32 @@ const AllMovies = () => {
         className="relative h-[50rem] w-full mb-24 flex items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url(${banner})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-black opacity-60"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-70"></div>
 
         <div className="relative z-10 text-center text-white mt-[10rem]">
-          <h1 className="text-6xl sm:text-8xl font-bold mb-4">
-            The Movies Pub
-          </h1>
-          <p className="text-xl sm:text-2xl">
-            Cinematic Odyssey: Unveiling the Magic of Movies
-          </p>
+          <h1 className="text-6xl sm:text-8xl font-extrabold tracking-wide mb-4 text-yellow-400">The Movies Pub</h1>
+          <p className="text-lg sm:text-2xl text-gray-300">Cinematic Odyssey: Unveiling the Magic of Movies</p>
         </div>
 
         <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 w-full max-w-4xl px-4">
-          <input
-            type="text"
-            className="w-full h-16 border px-10 outline-none rounded"
-            placeholder="Search Movie"
-            value={moviesFilter.searchTerm}
-            onChange={handleSearchChange}
-          />
-          <div className="sorts-container mt-4 flex flex-wrap justify-center gap-4">
+          <div className="relative">
+            <input
+              type="text"
+              className="w-full h-16 border border-yellow-500 px-10 outline-none rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 transition-all"
+              placeholder="Search for a Movie..."
+              value={moviesFilter.searchTerm}
+              onChange={handleSearchChange}
+            />
+            <FaSearch className="absolute top-5 left-4 text-yellow-500" />
+          </div>
+
+          <div className="sorts-container mt-6 flex flex-wrap justify-center gap-4">
             <select
-              className="border p-2 rounded text-black"
+              className="border border-yellow-500 p-3 rounded-lg text-white bg-gray-800 hover:bg-gray-700 transition-all focus:ring-2 focus:ring-yellow-500"
               value={moviesFilter.selectedGenre}
               onChange={(e) => handleGenreClick(e.target.value)}
             >
-              <option value="">Genres</option>
+              <option value="">All Genres</option>
               {genres?.map((genre) => (
                 <option key={genre._id} value={genre._id}>
                   {genre.name}
@@ -113,11 +114,11 @@ const AllMovies = () => {
             </select>
 
             <select
-              className="border p-2 rounded text-black"
+              className="border border-yellow-500 p-3 rounded-lg text-white bg-gray-800 hover:bg-gray-700 transition-all focus:ring-2 focus:ring-yellow-500"
               value={moviesFilter.selectedYear}
               onChange={(e) => handleYearChange(e.target.value)}
             >
-              <option value="">Year</option>
+              <option value="">All Years</option>
               {uniqueYears.map((year) => (
                 <option key={year} value={year}>
                   {year}
@@ -126,7 +127,7 @@ const AllMovies = () => {
             </select>
 
             <select
-              className="border p-2 rounded text-black"
+              className="border border-yellow-500 p-3 rounded-lg text-white bg-gray-800 hover:bg-gray-700 transition-all focus:ring-2 focus:ring-yellow-500"
               value={moviesFilter.selectedSort}
               onChange={(e) => handleSortChange(e.target.value)}
             >
@@ -139,10 +140,12 @@ const AllMovies = () => {
         </div>
       </section>
 
-      <section className="mt-24 w-full flex justify-center items-center flex-wrap">
-        {filteredMovies?.map((movie) => (
-          <MovieCard key={movie._id} movie={movie} />
-        ))}
+      <section className="mt-24 w-full flex justify-center items-center flex-wrap gap-6">
+        {filteredMovies?.length > 0 ? (
+          filteredMovies.map((movie) => <MovieCard key={movie._id} movie={movie} />)
+        ) : (
+          <p className="text-gray-500 text-lg">No movies found.</p>
+        )}
       </section>
     </div>
   );

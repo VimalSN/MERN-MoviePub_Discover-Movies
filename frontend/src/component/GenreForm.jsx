@@ -10,14 +10,14 @@ const GenreForm = ({
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="text"
-          className="py-3 px-4 border rounded-lg w-[60rem]"
+          className="py-3 px-4 border rounded-lg w-[45rem]"
           placeholder="Write genre name"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
 
         <div className="flex justify-between">
-          <button className="bg-teal-500 text-white py-2 px-8 ml-[27rem] mt-4  rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+          <button className="bg-teal-500 text-white py-2 px-8 ml-[19rem] mt-4  rounded-lg hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
             {buttonText}
           </button>
 
